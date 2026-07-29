@@ -20,7 +20,7 @@ const Home = () => {
             src="/hero-bbg.webp"
             alt=""
             aria-hidden="true"
-            className="absolute top-1/2 left-1/2 min-h-full min-w-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-85"
+            className="absolute top-1/2 left-1/2 min-h-full min-w-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-60"
           />
           {/* Subtle bottom fade to transition to the body color */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-dark-bg" />

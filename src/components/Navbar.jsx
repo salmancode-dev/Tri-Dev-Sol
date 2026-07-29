@@ -7,8 +7,8 @@ import logo from '../assets/logo-tridevsol.png';
 // const WHATSAPP_NUMBER = 's1818245-8203';
 // const WHATSAPP_DISPLAY = '1818 245-8203'; 
 
-const WHATSAPP_NUMBER = '92 03324435868';
-const WHATSAPP_DISPLAY = '03324435868'; 
+const WHATSAPP_NUMBER = '18182458203';
+const WHATSAPP_DISPLAY = '+1 (818) 245-8203'; 
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 const services = [
