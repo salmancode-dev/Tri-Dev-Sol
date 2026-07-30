@@ -27,32 +27,30 @@ const Home = () => {
         </div>
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0,transparent_60%)] pointer-events-none z-0" />
-        
+
         {/* Animated Glow Balls */}
         <div className="absolute top-16 sm:top-20 left-1/4 w-40 h-40 sm:w-72 sm:h-72 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-6 sm:bottom-10 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-brand-pink/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
+        <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/5 text-xs text-brand-purple font-medium tracking-wide uppercase"
+            // className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/5 text-xs text-brand-purple font-medium tracking-wide uppercase"
+            className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1CD8D2] bg-[#1CD8D2]/5 text-xs text-[#1CD8D2] font-medium tracking-wide uppercase"
           >
             <Cpu className="w-3.5 h-3.5 animate-pulse" />
-            <span>Next-Gen Frontend Engineering Studio</span>
+            <span>TRIDEVSOL / SOFTWARE BUILD STUDIO</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] [text-shadow:0_4px_12px_rgba(0,0,0,0.5)]"
+            className="bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63] bg-clip-text text-transparent text-4xl sm:text-5xl md:text6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]"
           >
-            We Build Premium <br />
-            <span className="bg-gradient-to-r from-brand-purple via-brand-indigo to-brand-pink bg-clip-text text-transparent">
-              Digital Solutions
-            </span>
+            We engineer web applications for businesses that can't afford to get this wrong.
           </motion.h1>
 
           <motion.p
@@ -61,7 +59,7 @@ const Home = () => {
             transition={{ duration: 1, delay: 0.3 }}
             className="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]"
           >
-            Transforming complex business logic into lightning-fast, pixel-perfect web applications. Scale your product with our elite react developers.
+            TriDevSol designs and builds custom web applications and MVPs for real estate and professional services companies - senior-led, fixed-scope, and delivered on a schedule you can actually plan around.
           </motion.p>
 
           <motion.div
@@ -72,23 +70,51 @@ const Home = () => {
           >
             <Link
               to="/contact"
-              className="px-8 py-4 bg-gradient-to-r from-brand-purple to-brand-indigo hover:from-brand-indigo hover:to-brand-purple text-white font-bold rounded-2xl shadow-lg shadow-brand-purple/20 transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+              className="px-8 py-4 bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63]  text-white font-bold rounded-2xl shadow-lg shadow-brand-purple/20 transition-all duration-300 hover:scale-105 flex items-center space-x-2"
             >
-              <span>Launch Your Project</span>
+              <span>Get A Free Quote</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
+
+            {/* bg-gradient-to-r from-brand-purple to-brand-indigo hover:from-brand-indigo hover:to-brand-purple */}
+
+            {/* 
             <Link
+              to="/contact"
+              className="bg-gradient-to-r
+from-violet-600
+via-blue-600
+to-cyan-500
+px-7
+py-4
+rounded-full
+font-semibold
+text-white
+shadow-lg
+transition-all
+duration-300
+hover:scale-105
+hover:shadow-cyan-500/30"
+            > */}
+
+
+
+
+
+
+
+            {/* <Link
               to="/services"
               className="px-8 py-4 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105"
             >
               Explore Services
-            </Link>
+            </Link> */}
           </motion.div>
-        </div> */}
-      </section>
+        </div>
+      </section >
 
       {/* Featured Services Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      < section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Our Core Services
@@ -136,10 +162,10 @@ const Home = () => {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </section>
+      </section >
 
       {/* Industries CTA Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      < section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
         <div className="relative bg-gradient-to-br from-dark-card via-brand-purple/5 to-brand-indigo/5 border border-white/10 rounded-[32px] p-8 sm:p-16 overflow-hidden shadow-2xl">
           <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_right_center,rgba(99,102,241,0.1)_0,transparent_50%)] pointer-events-none" />
 
@@ -207,8 +233,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 
