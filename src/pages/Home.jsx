@@ -13,108 +13,151 @@ const Home = () => {
   return (
     <div className="space-y-32 pb-24">
       {/* Hero Section */}
-      <section className="relative min-h-[100svh] min-h-[100dvh] flex items-center justify-center px-4 sm:px-6 overflow-hidden pt-16 sm:pt-20">
-        {/* Hero Image Background */}
-        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-          <img
-            src="/hero-bbg.webp"
-            alt=""
-            aria-hidden="true"
-            className="absolute top-1/2 left-1/2 min-h-full min-w-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover object-center opacity-60"
-          />
-          {/* Subtle bottom fade to transition to the body color */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-dark-bg" />
-        </div>
+      <section
+        style={{
+          position: 'relative',
+          minHeight: '100svh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 1.5rem',
+          overflow: 'hidden',
+          paddingTop: '72px',
+          backgroundColor: '#030014',
+        }}
+      >
+        {/* Main glow - dark mehron/maroon */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 45% 32% at 50% 22%, rgba(113, 0, 45, 0.8) 0%, rgba(100,5,45,0.45) 45%, rgba(3,0,20,0) 72%)',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
+        {/* Inner bright core - mehron highlight */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse 22% 15% at 50% 12%, rgba(200,20,80,0.35) 0%, transparent 70%)',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0,transparent_60%)] pointer-events-none z-0" />
+        {/* Subtle grid overlay */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: 'linear-gradient(rgba(230, 0, 0, 0.01) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
 
-        {/* Animated Glow Balls */}
-        <div className="absolute top-16 sm:top-20 left-1/4 w-40 h-40 sm:w-72 sm:h-72 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-6 sm:bottom-10 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-brand-pink/5 rounded-full blur-3xl pointer-events-none" />
+        {/* Bottom fade */}
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: '200px',
+          background: 'linear-gradient(to bottom, transparent, #030014)',
+          pointerEvents: 'none', zIndex: 1,
+        }} />
 
-        <div className="max-w-5xl mx-auto text-center space-y-8 z-10">
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+
+          {/* Booking badge - matches screenshot's "Booking Q3 2025 project slots" pill */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            // className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-brand-purple/30 bg-brand-purple/5 text-xs text-brand-purple font-medium tracking-wide uppercase"
-            className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full border border-[#1CD8D2] bg-[#1CD8D2]/5 text-xs text-[#1CD8D2] font-medium tracking-wide uppercase"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              padding: '6px 16px', borderRadius: '100px',
+              fontSize: '0.75rem', fontWeight: 500,
+              color: '#8b8989ff',
+              marginBottom: '2rem',
+              border: '2px solid #000000ff',
+            }}
           >
-            <Cpu className="w-3.5 h-3.5 animate-pulse" />
-            <span>TRIDEVSOL / SOFTWARE BUILD STUDIO</span>
+            <span style={{
+              width: '6px', height: '6px', borderRadius: '50%',
+              backgroundColor: '#04ec00ff',
+              display: 'inline-block',
+              boxShadow: '0 0 8px #a2a2a2',
+            }} />
+            <span>Booking Q3 2026 project slots</span>
           </motion.div>
 
+          {/* Main Headline - matches screenshot typography */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63] bg-clip-text text-transparent text-4xl sm:text-5xl md:text6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]"
+            style={{
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              marginBottom: '1.5rem',
+            }}
           >
-            We engineer web applications for businesses that can't afford to get this wrong.
+            Web applications built by<br />
+            developers, not templates.
           </motion.h1>
 
+          {/* Sub-copy */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed [text-shadow:0_2px_8px_rgba(0,0,0,0.6)]"
+            style={{
+              fontSize: '1.05rem',
+              color: 'rgba(255,255,255,0.6)',
+              maxWidth: '560px',
+              margin: '0 auto 2.5rem',
+              lineHeight: 1.7,
+            }}
           >
-            TriDevSol designs and builds custom web applications and MVPs for real estate and professional services companies - senior-led, fixed-scope, and delivered on a schedule you can actually plan around.
+            TriDevSol is a software agency for founders and operators across 20 countries who need custom web apps, MVPs, and AI features shipped by senior engineers — not outsourced to a freelancer chain.
           </motion.p>
 
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ duration: 0.8, delay: 0.45 }}
+            style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px' }}
           >
             <Link
               to="/contact"
-              className="px-8 py-4 bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63]  text-white font-bold rounded-2xl shadow-lg shadow-brand-purple/20 transition-all duration-300 hover:scale-105 flex items-center space-x-2"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '14px 28px',
+                backgroundColor: '#fff', color: '#000',
+                fontWeight: 700, fontSize: '0.9rem',
+                borderRadius: '10px', textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#e8e8e8'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
-              <span>Get A Free Quote</span>
-              <ArrowRight className="w-5 h-5" />
+              Book a free strategy call
             </Link>
 
-            {/* bg-gradient-to-r from-brand-purple to-brand-indigo hover:from-brand-indigo hover:to-brand-purple */}
-
-            {/* 
             <Link
-              to="/contact"
-              className="bg-gradient-to-r
-from-violet-600
-via-blue-600
-to-cyan-500
-px-7
-py-4
-rounded-full
-font-semibold
-text-white
-shadow-lg
-transition-all
-duration-300
-hover:scale-105
-hover:shadow-cyan-500/30"
-            > */}
-
-
-
-
-
-
-
-            {/* <Link
               to="/services"
-              className="px-8 py-4 border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all duration-300 hover:scale-105"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                padding: '14px 28px',
+                backgroundColor: 'transparent', color: 'rgba(255,255,255,0.85)',
+                fontWeight: 600, fontSize: '0.9rem',
+                border: 'none',
+                borderRadius: '10px', textDecoration: 'none',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.85)'; }}
             >
-              Explore Services
-            </Link> */}
+              See our work <span style={{ marginLeft: '4px' }}>→</span>
+            </Link>
           </motion.div>
         </div>
-      </section >
+      </section>
 
       {/* Featured Services Section */}
-      < section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Our Core Services
@@ -162,10 +205,10 @@ hover:shadow-cyan-500/30"
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </section >
+      </section>
 
       {/* Industries CTA Section */}
-      < section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" >
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative bg-gradient-to-br from-dark-card via-brand-purple/5 to-brand-indigo/5 border border-white/10 rounded-[32px] p-8 sm:p-16 overflow-hidden shadow-2xl">
           <div className="absolute inset-y-0 right-0 w-1/2 bg-[radial-gradient(circle_at_right_center,rgba(99,102,241,0.1)_0,transparent_50%)] pointer-events-none" />
 
@@ -194,7 +237,7 @@ hover:shadow-cyan-500/30"
                 </li>
                 <li className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4 text-brand-purple" />
-                  <span>SaaS & Tech startups</span>
+                  <span>SaaS &amp; Tech startups</span>
                 </li>
               </ul>
 
@@ -233,8 +276,8 @@ hover:shadow-cyan-500/30"
             </div>
           </div>
         </div>
-      </section >
-    </div >
+      </section>
+    </div>
   );
 };
 

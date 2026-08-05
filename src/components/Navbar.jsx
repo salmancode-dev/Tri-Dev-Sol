@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Sparkles, Building, Phone } from 'lucide-react';
-import logo from '../assets/mainlogo.png';
-
-// const WHATSAPP_NUMBER = 's1818245-8203';
-// const WHATSAPP_DISPLAY = '1818 245-8203'; 
-
-const WHATSAPP_NUMBER = '18182458203';
-const WHATSAPP_DISPLAY = '+1 (818) 245-8203';
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+import { Menu, X, ChevronDown, Sparkles, Building } from 'lucide-react';
+import logo from '../assets/mainlogo.svg';
 
 const services = [
   { name: 'Custom Web Application Development', path: '/services/custom-web-app' },
@@ -36,12 +29,12 @@ const industries = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // 'services' | 'industries' | null
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Close mobile menu and dropdowns on page transition
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
@@ -49,66 +42,88 @@ const Navbar = () => {
     setMobileIndustriesOpen(false);
   }, [location]);
 
-  const navClass = "fixed top-0 left-0 w-full z-50 border-b border-gray-200 bg-white shadow-sm";
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  // Dropdown variants for Framer Motion
   const dropdownVariants = {
-    hidden: { opacity: 0, y: 15, scale: 0.95 },
+    hidden: { opacity: 0, y: 10, scale: 0.97 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.2, ease: 'easeOut' }
+      transition: { duration: 0.18, ease: 'easeOut' }
     },
     exit: {
       opacity: 0,
-      y: 10,
-      scale: 0.95,
-      transition: { duration: 0.15, ease: 'easeIn' }
+      y: 6,
+      scale: 0.97,
+      transition: { duration: 0.12, ease: 'easeIn' }
     }
   };
 
   return (
     <motion.nav
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.1 }}
-      className={navClass}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      transition={{ duration: 0.6, delay: 0.1 }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        zIndex: 50,
+        backgroundColor: scrolled ? 'rgba(3,0,20,0.95)' : '#030014',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(255,255,255,0.05)',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        transition: 'all 0.3s ease',
+      }}
+    >
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '72px' }}>
 
-          {/* Logo / Brand */}
-          <Link to="/" className="flex items-center shrink-0 group">
+          {/* Logo */}
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <img
               src={logo}
               alt="TriDevSol"
-              className="h-18 w-30 object-contain group-hover:scale-105 transition-transform duration-300"
+              style={{ height: '48px', width: 'auto', objectFit: 'contain', transition: 'transform 0.3s' }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
             />
           </Link>
 
-
-
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div style={{ display: 'none', alignItems: 'center', gap: '0.75rem' }} className="desktop-nav">
             <NavLink
               to="/"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] ${isActive ? 'text-[#00bf8f]' : 'text-gray-700'}`
-              }
+              end
+              className="nav-link-item"
             >
               Home
             </NavLink>
 
-            {/* Services Dropdown Trigger */}
+            {/* Services Dropdown */}
             <div
-              className="relative"
+              style={{ position: 'relative' }}
               onMouseEnter={() => setActiveDropdown('services')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className={`flex items-center space-x-1 text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] cursor-pointer ${location.pathname.startsWith('/services') ? 'text-[#00bf8f]' : 'text-gray-700'
-                }`}>
+              <button
+                className={`nav-link-item ${location.pathname.startsWith('/services') ? 'active' : ''}`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '4px',
+                  background: 'none', border: 'none', cursor: 'pointer',
+                }}
+              >
                 <span>Services</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'services' ? 'rotate-180' : ''}`} />
+                <ChevronDown style={{
+                  width: '15px', height: '15px',
+                  transform: activeDropdown === 'services' ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.25s'
+                }} />
               </button>
 
               <AnimatePresence>
@@ -118,21 +133,30 @@ const Navbar = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute left-0 mt-2 w-72 bg-white border border-gray-200 rounded-2xl p-4 shadow-2xl"
+                    style={{
+                      position: 'absolute', left: 0, top: 'calc(100% + 12px)',
+                      width: '280px',
+                      background: 'linear-gradient(135deg, rgba(15,3,8,0.98) 0%, rgba(10,2,5,0.98) 100%)',
+                      border: '1px solid rgba(232,67,90,0.15)',
+                      borderRadius: '16px',
+                      padding: '16px',
+                      boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(120,10,30,0.12)',
+                      backdropFilter: 'blur(20px)',
+                    }}
                   >
-                    <div className="flex items-center space-x-2 mb-3 pb-2 border-b border-gray-100">
-                      <Sparkles className="w-4 h-4 text-[#00bf8f]" />
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Our Expertise</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px solid rgba(232,67,90,0.1)' }}>
+                      <Sparkles style={{ width: '14px', height: '14px', color: '#E8435A' }} />
+                      <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Our Expertise</span>
                     </div>
-                    <div className="flex flex-col space-y-1">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                       {services.map((service, index) => (
-                        <Link
+                        <NavLink
                           key={index}
                           to={service.path}
-                          className="px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 hover:text-[#00bf8f] transition-all duration-200"
+                          className="dropdown-item-link"
                         >
                           {service.name}
-                        </Link>
+                        </NavLink>
                       ))}
                     </div>
                   </motion.div>
@@ -140,16 +164,25 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            {/* Industries Dropdown Trigger */}
+            {/* Industries Dropdown */}
             <div
-              className="relative"
+              style={{ position: 'relative' }}
               onMouseEnter={() => setActiveDropdown('industries')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <button className={`flex items-center space-x-1 text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] cursor-pointer ${location.pathname.startsWith('/industries') ? 'text-[#00bf8f]' : 'text-gray-700'
-                }`}>
+              <button
+                className={`nav-link-item ${location.pathname.startsWith('/industries') ? 'active' : ''}`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '4px',
+                  background: 'none', border: 'none', cursor: 'pointer',
+                }}
+              >
                 <span>Industries</span>
-                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === 'industries' ? 'rotate-180' : ''}`} />
+                <ChevronDown style={{
+                  width: '15px', height: '15px',
+                  transform: activeDropdown === 'industries' ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.25s'
+                }} />
               </button>
 
               <AnimatePresence>
@@ -159,21 +192,32 @@ const Navbar = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-2xl p-4 shadow-2xl max-h-[420px] overflow-y-auto"
+                    style={{
+                      position: 'absolute', left: 0, top: 'calc(100% + 12px)',
+                      width: '240px',
+                      background: 'linear-gradient(135deg, rgba(15,3,8,0.98) 0%, rgba(10,2,5,0.98) 100%)',
+                      border: '1px solid rgba(232,67,90,0.15)',
+                      borderRadius: '16px',
+                      padding: '16px',
+                      boxShadow: '0 20px 60px rgba(0,0,0,0.7), 0 0 30px rgba(120,10,30,0.12)',
+                      backdropFilter: 'blur(20px)',
+                      maxHeight: '400px',
+                      overflowY: 'auto',
+                    }}
                   >
-                    <div className="flex items-center space-x-2 mb-3 pb-2 border-b border-gray-100">
-                      <Building className="w-4 h-4 text-[#00bf8f]" />
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Sectors We Serve</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', paddingBottom: '10px', borderBottom: '1px solid rgba(232,67,90,0.1)' }}>
+                      <Building style={{ width: '14px', height: '14px', color: '#E8435A' }} />
+                      <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Sectors We Serve</span>
                     </div>
-                    <div className="flex flex-col space-y-1">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                       {industries.map((ind, index) => (
-                        <Link
+                        <NavLink
                           key={index}
                           to={ind.path}
-                          className="px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-50 hover:text-[#00bf8f] transition-all duration-200"
+                          className="dropdown-item-link"
                         >
                           {ind.name}
-                        </Link>
+                        </NavLink>
                       ))}
                     </div>
                   </motion.div>
@@ -183,52 +227,64 @@ const Navbar = () => {
 
             <NavLink
               to="/blog"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] ${isActive ? 'text-[#00bf8f]' : 'text-gray-700'}`
-              }
+              className="nav-link-item"
             >
               Blog
             </NavLink>
 
             <NavLink
               to="/about"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] ${isActive ? 'text-[#00bf8f]' : 'text-gray-700'}`
-              }
+              className="nav-link-item"
             >
-              About Us
+              About us
             </NavLink>
 
             <NavLink
               to="/contact"
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors duration-300 hover:text-[#00bf8f] ${isActive ? 'text-[#00bf8f]' : 'text-gray-700'}`
-              }
+              className="nav-link-item"
             >
               Contact
             </NavLink>
           </div>
 
-          {/* Desktop WhatsApp */}
-          <div className="hidden lg:flex">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63] hover:opacity-90 transition-all duration-300 shadow-lg"
+          {/* Book a Call CTA */}
+          <div className="desktop-cta" style={{ display: 'none' }}>
+            <Link
+              to="/contact"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '10px 22px',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#000',
+                backgroundColor: '#fff',
+                borderRadius: '8px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                letterSpacing: '0.01em',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#e5e5e5'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+              onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
-              <Phone className="w-4 h-4 text-white" />
-              <span>{WHATSAPP_DISPLAY}</span>
-            </a>
+              Book a call
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex lg:hidden">
+          <div className="mobile-menu-btn">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-xl text-gray-600 hover:text-brand-purple hover:bg-gray-100 focus:outline-none transition-colors duration-300"
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: '8px', borderRadius: '10px',
+                color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none',
+                cursor: 'pointer', transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#fff'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; }}
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X style={{ width: '22px', height: '22px' }} /> : <Menu style={{ width: '22px', height: '22px' }} />}
             </button>
           </div>
 
@@ -242,24 +298,24 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-b border-gray-200 overflow-hidden"
+            style={{
+              background: 'rgba(10,5,36,0.98)',
+              borderTop: '1px solid rgba(255,255,255,0.06)',
+              overflow: 'hidden',
+            }}
           >
-            <div className="px-4 pt-2 pb-6 space-y-3">
-              <Link
-                to="/"
-                className="block px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
-              >
-                Home
-              </Link>
+            <div style={{ padding: '16px 24px 28px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <NavLink to="/" end className="mobile-nav-link">Home</NavLink>
 
-              {/* Mobile Services Accordion */}
+              {/* Mobile Services */}
               <div>
                 <button
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
+                  className={`mobile-nav-link ${location.pathname.startsWith('/services') ? 'active' : ''}`}
+                  style={{ width: '100%', display: 'flex', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <span>Services</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown style={{ width: '16px', height: '16px', transform: mobileServicesOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.25s' }} />
                 </button>
                 <AnimatePresence>
                   {mobileServicesOpen && (
@@ -267,30 +323,27 @@ const Navbar = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="pl-6 space-y-1 overflow-hidden"
+                      style={{ paddingLeft: '16px', overflow: 'hidden' }}
                     >
                       {services.map((service, index) => (
-                        <Link
-                          key={index}
-                          to={service.path}
-                          className="block px-3 py-2 text-sm text-gray-600 hover:text-brand-purple"
-                        >
+                        <NavLink key={index} to={service.path} className="mobile-sub-link">
                           {service.name}
-                        </Link>
+                        </NavLink>
                       ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              {/* Mobile Industries Accordion */}
+              {/* Mobile Industries */}
               <div>
                 <button
                   onClick={() => setMobileIndustriesOpen(!mobileIndustriesOpen)}
-                  className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
+                  className={`mobile-nav-link ${location.pathname.startsWith('/industries') ? 'active' : ''}`}
+                  style={{ width: '100%', display: 'flex', justifyContent: 'space-between', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <span>Industries</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${mobileIndustriesOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown style={{ width: '16px', height: '16px', transform: mobileIndustriesOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.25s' }} />
                 </button>
                 <AnimatePresence>
                   {mobileIndustriesOpen && (
@@ -298,59 +351,120 @@ const Navbar = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="pl-6 space-y-1 overflow-hidden"
+                      style={{ paddingLeft: '16px', overflow: 'hidden' }}
                     >
                       {industries.map((ind, index) => (
-                        <Link
-                          key={index}
-                          to={ind.path}
-                          className="block px-3 py-2 text-sm text-gray-600 hover:text-brand-purple"
-                        >
+                        <NavLink key={index} to={ind.path} className="mobile-sub-link">
                           {ind.name}
-                        </Link>
+                        </NavLink>
                       ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              <Link
-                to="/blog"
-                className="block px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
-              >
-                Blog
-              </Link>
+              <NavLink to="/blog" className="mobile-nav-link">Blog</NavLink>
+              <NavLink to="/about" className="mobile-nav-link">About us</NavLink>
+              <NavLink to="/contact" className="mobile-nav-link">Contact</NavLink>
 
-              <Link
-                to="/about"
-                className="block px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
-              >
-                About Us
-              </Link>
-
-              <Link
-                to="/contact"
-                className="block px-3 py-2 rounded-lg text-base font-semibold text-gray-700 hover:bg-gray-100 hover:text-brand-purple"
-              >
-                Contact
-              </Link>
-
-              <div className="pt-4 border-t border-white/5">
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-3bg-gradient-to-r from-[#1CD8D2] via-[#00bf8f] to-[#302b63]  text-white font-semibold rounded-xl transition-all duration-300"
+              <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '8px' }}>
+                <Link
+                  to="/contact"
+                  style={{
+                    display: 'block', textAlign: 'center',
+                    padding: '12px', borderRadius: '10px',
+                    backgroundColor: '#fff', color: '#000',
+                    fontWeight: 600, fontSize: '0.9rem',
+                    textDecoration: 'none',
+                  }}
                 >
-                  <Phone className="w-4 h-4" />
-                  <span>{WHATSAPP_DISPLAY}</span>
-                </a>
+                  Book a call
+                </Link>
               </div>
-
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        .nav-link-item {
+          font-size: 0.9rem;
+          font-weight: 500;
+          padding: 8px 14px;
+          border-radius: 8px;
+          text-decoration: none;
+          letter-spacing: 0.01em;
+          color: rgba(255, 255, 255, 0.85);
+          background: transparent;
+          transition: all 0.2s ease;
+        }
+        .nav-link-item:hover {
+          color: #E8435A;
+          background: rgba(232, 67, 90, 0.1);
+        }
+        .nav-link-item.active {
+          color: #E8435A;
+          background: rgba(232, 67, 90, 0.15);
+          font-weight: 600;
+        }
+
+        .dropdown-item-link {
+          display: block;
+          padding: 8px 12px;
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.7);
+          text-decoration: none;
+          border-radius: 10px;
+          transition: all 0.15s ease;
+        }
+        .dropdown-item-link:hover,
+        .dropdown-item-link.active {
+          background: rgba(232, 67, 90, 0.15);
+          color: #E8435A;
+        }
+
+        .mobile-nav-link {
+          display: block;
+          padding: 10px 12px;
+          border-radius: 10px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: all 0.15s ease;
+        }
+        .mobile-nav-link:hover,
+        .mobile-nav-link.active {
+          color: #E8435A;
+          background: rgba(232, 67, 90, 0.12);
+        }
+
+        .mobile-sub-link {
+          display: block;
+          padding: 8px 12px;
+          font-size: 0.85rem;
+          color: rgba(255, 255, 255, 0.55);
+          text-decoration: none;
+          border-radius: 8px;
+          transition: all 0.15s ease;
+        }
+        .mobile-sub-link:hover,
+        .mobile-sub-link.active {
+          color: #E8435A;
+          background: rgba(232, 67, 90, 0.1);
+        }
+
+        @media (min-width: 1024px) {
+          .desktop-nav { display: flex !important; }
+          .desktop-cta { display: flex !important; }
+          .mobile-menu-btn { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+          .desktop-nav { display: none !important; }
+          .desktop-cta { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+        }
+      `}</style>
     </motion.nav>
   );
 };
